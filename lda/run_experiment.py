@@ -38,5 +38,5 @@ for epoch in xrange(epochs):
 			print model.topic_distribution_of_document(m)
 
 	time2 = time.time()
-	print 'Time Used: %fmin' % ((time2 - time1) / 60)
+	print 'Time Used of Epoch %d: %fmin' % (epoch, (time2 - time1) / 60)
 
