@@ -23,11 +23,13 @@ for epoch in xrange(epochs):
 		for k in xrange(K):
 			fi = model.word_distribution_of_topic()
 			# normalize by word
+			temp = np.array(fi)
 			for v in xrange(V):
-				fi[:, v] = fi[:, v]
+				sum_v = sum(temp[:, v])
+				temp[:, v] = temp[:, v] / sum_v
 			words = list()
 			for _ in xrange(10):
-				fi_k = fi[k, :]
+				fi_k = temp[k, :]
 				maximum = max(fi_k)
 				index = np.where(fi_k == fi_k.max())[0][0]
 				fi_k[index] = 0
@@ -35,7 +37,8 @@ for epoch in xrange(epochs):
 			print 'Top Words of Topic %d: %s' % (k, str(words))
 
 		for m in xrange(model.M):
-			print model.topic_distribution_of_document(m)
+			if m < 5:
+				print model.topic_distribution_of_document(m)
 
 	time2 = time.time()
 	print 'Time Used of Epoch %d: %fmin' % (epoch, (time2 - time1) / 60)
